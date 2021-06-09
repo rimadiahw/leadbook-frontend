@@ -63,6 +63,7 @@
     import { reactive, ref } from 'vue'
     import { useRouter } from 'vue-router'
     import axios from 'axios'
+    import swal from 'sweetalert'
 
     export default {
 
@@ -99,8 +100,9 @@
                         password,
                         password_confirmation
                 })
-                .then(() => {
-
+                .then(response => {
+                    //show popup message
+                    swal(response.data.message, "Check your Email!");
                     //redirect ke halaman login
                     return router.push({
                         name: 'login'

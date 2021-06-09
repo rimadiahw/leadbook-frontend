@@ -3,7 +3,7 @@
         <div class="row justify-content-center">
             <div class="col-md-4">
                 <div v-if="loginFailed" class="alert alert-danger">
-                        Email atau Password Anda salah.
+                        Your Email or Password is wrong.
                     </div>
                 <div class="card border-0 rounded shadow">
                     <div class="card-body">
