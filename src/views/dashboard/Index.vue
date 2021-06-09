@@ -62,8 +62,6 @@ import axios from 'axios'
                 axios.defaults.headers.common.Authorization = `Bearer ${token}`
                 axios.get(process.env.VUE_APP_URL+'user')
                 .then(response => {
-
-                    //console.log(response.data.name)
                     user.value = response.data
 
                 })

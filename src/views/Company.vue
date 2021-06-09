@@ -62,13 +62,13 @@
 
 <script>
     import { ref } from 'vue'
-    // import { useRouter } from 'vue-router'
     import axios from 'axios'
 
     export default {
         data() {
             return {
-                filteredCompanies: [], // mendefisikan variabel posts
+                // declare variable
+                filteredCompanies: [], 
                 search: "",
                 token:localStorage.getItem('token'),
                 user:ref('')
@@ -80,90 +80,40 @@
             }
         },
         mounted() {
+            //run getAllCompany method
             this.getAllCompany(this.search);
         },
         methods: {
+            //method to get company list
             getAllCompany(search){
-				// get data user
+				//get data user
                 axios.defaults.headers.common.Authorization = `Bearer ${this.token}`
+                //call API
                 axios.post(process.env.VUE_APP_URL+'find-company?name='+search)
                 .then(response => {
                     console.log(response.data.data)
                      this.filteredCompanies = response.data.data
-                     //this.filteredCompanies = companies.value.filter(company => company.company_name.includes('lead'))
                 })
 			},
+            //method to mark company
             markCompany(id)
             {
+                //call API
                 axios.get(process.env.VUE_APP_URL+'mark-company/'+id)
                     .then(() => {
                         this.getAllCompany('')
                     });
             },
+            //method to unmark favourite company
             unmarkCompany(id)
             {
+                //call API
                 axios.get(process.env.VUE_APP_URL+'unmark-company/'+id)
                     .then(() => {
                         this.getAllCompany('')
                     });
             }
         }
-        // setup() {
-        //     //state token
-        //     const token = localStorage.getItem('token')
-
-        //     //inisialisasi vue router on Composition API
-        //     const router = useRouter()
-
-        //     //state user
-        //     const companies = ref('')
-        //     const search = ref('')
-
-        //     onMounted(() =>{
-
-        //         //check Token exist
-        //         if(!token) {
-        //             return router.push({
-        //                 name: 'login'
-        //             })
-        //         }
-                
-        //         //get data user
-        //         axios.defaults.headers.common.Authorization = `Bearer ${token}`
-        //         axios.post(process.env.VUE_APP_URL+'company')
-        //         .then(response => {
-        //              companies.value = response.data.data
-        //              //this.filteredCompanies = companies.value.filter(company => company.company_name.includes('lead'))
-        //         })
-        //         .then(res => {
-        //             if (search.value) {
-        //                 companies.value = res.results.filter(company =>
-        //                 company.company_name.toLowerCase().includes(search.value.toLowerCase())
-        //                 )
-        //             } else {
-        //                 companies.value = ''
-        //             }
-        //         })
-
-        //     })
-        //     // function companyList() {
-
-        //     //     //send server with axios
-        //     //     axios.post(process.env.VUE_APP_URL+'company')
-        //     //     .then(response => {
-        //     //         this.companies = response.data.data
-        //     //     })
-        //     // }
-
-        //     return {
-        //         //companyList, // <-- state user
-        //         //validation, // <-- state validation 
-        //         //search // <-- method register
-        //         token,
-        //         companies
-        //     }
-
-        // }
 
     }
 </script>
